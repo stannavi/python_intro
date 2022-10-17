@@ -64,6 +64,27 @@ for i in my_list:
         max = i - int(i)
 print(Decimal(max - min))
 
+# Задача 4. Напишите программу, которая будет преобразовывать десятичное
+# число в двоичное. Нельзя использовать готовые функции.
 
+# *Пример:*
+# - 45 -> 101101
+# - 3 -> 11
+# - 2 -> 10
+
+a = int(input("Введите число: "))
+result = []
+result2 = []
+result3 = []
+
+while a:
+    result.append(a % 2)
+    a //= 2
+
+result2 = result[::-1]
+
+for i in result2:
+    result3.append(str(i))
+print("".join(result3))
 
 
