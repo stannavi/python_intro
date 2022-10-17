@@ -44,4 +44,26 @@ for i in range(len(list)):
 print(list)
 print(list2)
 
+# Задача 3. Задайте список из вещественных чисел.
+# Напишите программу, которая найдёт разницу между
+# максимальным и минимальным значением дробной части элементов.
+
+# *Пример:*
+# - [1.1, 1.2, 3.1, 5, 10.01] => 0.19
+
+from decimal import Decimal
+
+my_list = [1.6, 1.2, 3.1, 5.04, 10.06]
+max = 0
+min = 1
+
+for i in my_list:
+    if(i - int(i)) <= min:
+        min = i - int(i)
+    if(i - int(i)) >= max:
+        max = i - int(i)
+print(Decimal(max - min))
+
+
+
 
