@@ -98,3 +98,69 @@ while True:
     if is_board_full(board):
         print("Ничья!")
         break
+
+# Задача 2. Напишите программу вычисления арифметического выражения заданного
+# строкой. Используйте операции +,-,/,*. приоритет операций стандартный.
+
+def parse_math_expression(exp):
+    PRECENDENCE = {
+        ')': 3,
+        '(': 3,
+        '*': 1,
+        '/': 1,
+        '+': 0,
+        '-': 0,
+    }
+    output = []
+    operators = []
+    for ch in exp:
+        # Handle nested expressions
+        if ch == ')':
+            opr = operators.pop(0)
+            while opr != '(':
+                output.append(opr)
+                opr = operators.pop(0)
+        elif ch.isdigit():
+            output.append(ch)
+        else:
+            # Handle operator prescendence
+            top_op = None
+            if len(operators) and operators[0]:
+                top_op = operators[0]
+            # Check if top operator has greater prcendencethan current char
+            if top_op in ['*', '/'] and PRECENDENCE[top_op] > PRECENDENCE[ch]:
+                output.append(top_op)
+                operators.pop(0)
+            # Push operator onto queues
+            operators.insert(0, ch)
+    # Handle any leftover operators
+    while len(operators):
+        output.append(operators.pop(0))
+    return output
+
+
+def eval_parsed_expression(exp):
+    OPRS = {
+        '+': lambda a, b: a + b,
+        '-': lambda a, b: a - b,
+        '*': lambda a, b: a * b,
+        '/': lambda a, b: a / b
+    }
+    tmp = []
+    while len(exp) > 1:
+        k = exp.pop(0)
+        while not k in ['*', '-', '+', '/']:
+            tmp.insert(0, k)
+            k = exp.pop(0)
+        o = k
+        b = tmp.pop(0)
+        a = tmp.pop(0)
+        r = OPRS[o](int(a), int(b))
+        exp.insert(0, r)
+    return exp[0]
+
+text = input("Введите арифметическое выражение: ")
+text = text.replace(" ","")
+exp_list = parse_math_expression(text)
+
+print(eval_parsed_expression(exp_list))
